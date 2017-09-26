@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackTemplatePug = require('html-webpack-template-pug');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-const stylelint = require('stylelint');
+const StyleLintPlugin = require('stylelint-webpack-plugin');
 const precss = require('precss');
 const autoprefixer = require('autoprefixer');
 
@@ -29,38 +29,24 @@ module.exports = {
         stats: 'errors-only',
     },
     module: {
-        rules: [
-            // {
-            //     test: /\.(css|scss)$/,
-            //     include: path.join(PATHS.src, 'assets/style'),
-            //     enforce: 'pre',
-            //     use: {
-            //         loader: 'postcss-loader',
-            //         options: {
-            //             plugins: () => ([
-            //                 stylelint(),
-            //             ]),
-            //         },
-            //     },
-            // },
-            {
-                test: /\.scss$/,
-                use: ExtractTextPlugin.extract({
-                    use: [
-                        'css-loader',
-                        {
-                            loader: 'postcss-loader',
-                            options: {
-                                plugins: () => ([
-                                    precss,
-                                    autoprefixer,
-                                ]),
-                            },
+        rules: [{
+            test: /\.scss$/,
+            use: ExtractTextPlugin.extract({
+                use: [
+                    'css-loader',
+                    {
+                        loader: 'postcss-loader',
+                        options: {
+                            plugins: () => ([
+                                precss,
+                                autoprefixer,
+                            ]),
                         },
-                        'sass-loader',
-                    ],
-                }),
-            }],
+                    },
+                    'sass-loader',
+                ],
+            }),
+        }],
     },
     plugins: [
         new ExtractTextPlugin({
@@ -81,5 +67,16 @@ module.exports = {
             'window.jQuery': 'jquery',
             Popper: ['popper.js', 'default'],
         }),
+        new StyleLintPlugin({
+            context: path.join(PATHS.src, 'assets/style'),
+            failOnError: true,
+            quiet: false,
+        }),
     ],
+    resolve: {
+        extensions: ['.js', '.json', '.jsx', '.css', '.scss'],
+        alias: {
+            bootswatch: path.join(PATHS.src, 'third/bootswatch'),
+        },
+    },
 };

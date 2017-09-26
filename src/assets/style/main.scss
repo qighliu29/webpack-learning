@@ -1,5 +1,7 @@
-// @import "custom";
+// @import 'custom';
+@import '~bootswatch/flatly/variables';
 @import '~bootstrap/scss/bootstrap';
+@import '~bootswatch/flatly/bootswatch';
 
 body {
     color: #fff;
