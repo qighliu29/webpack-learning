@@ -6,12 +6,15 @@
   "scripts": {
     "start": "webpack-dev-server --env development",
     "build": "webpack --env production",
-    "clean": "rimraf -rf ./dist"
+    "clean": "rimraf -rf ./dist",
+    "lint:style": "stylelint src/assets/style/*.css src/assets/style/*.scss",
+    "fix:style": "stylelint src/assets/style/*.css src/assets/style/*.scss --fix"
   },
   "keywords": [],
   "author": "swatekh",
   "license": "MIT",
   "devDependencies": {
+    "autoprefixer": "^7.1.4",
     "clean-webpack-plugin": "^0.1.16",
     "css-loader": "^0.28.7",
     "eslint": "^4.6.0",
@@ -20,10 +23,24 @@
     "extract-text-webpack-plugin": "^3.0.0",
     "html-webpack-plugin": "^2.30.1",
     "html-webpack-template-pug": "^1.1.1",
+    "node-sass": "4.0.0",
+    "postcss-loader": "^2.0.6",
+    "precss": "^2.0.0",
     "pug": "^2.0.0-rc.4",
     "pug-loader": "^2.3.0",
     "rimraf": "^2.6.2",
+    "sass-loader": "^6.0.6",
+    "stylelint": "^8.1.1",
+    "stylelint-config-sass-guidelines": "^3.1.0",
+    "stylelint-config-standard": "^17.0.0",
+    "stylelint-order": "^0.7.0",
+    "stylelint-scss": "^2.1.0",
     "webpack": "^3.6.0",
     "webpack-dev-server": "^2.8.2"
+  },
+  "dependencies": {
+    "bootstrap": "4.0.0-beta",
+    "jquery": "^3.2.1",
+    "popper.js": "1.11.0"
   }
 }

@@ -1,0 +1,7 @@
+{
+    "extends": ["stylelint-config-standard", "stylelint-config-sass-guidelines"],
+    "rules": {
+        "color-hex-case": "lower",
+        "indentation": 4
+    }
+}

@@ -1,16 +1,20 @@
 const path = require('path');
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackTemplatePug = require('html-webpack-template-pug');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const stylelint = require('stylelint');
+const precss = require('precss');
+const autoprefixer = require('autoprefixer');
 
 const PATHS = {
-    app: path.join(__dirname, 'app'),
+    src: path.join(__dirname, 'src'),
     dist: path.join(__dirname, 'dist'),
 };
 
 module.exports = {
-    entry: PATHS.app,
+    entry: PATHS.src,
     output: {
         filename: '[name].[chunkhash:8].js',
         path: PATHS.dist,
@@ -25,13 +29,38 @@ module.exports = {
         stats: 'errors-only',
     },
     module: {
-        rules: [{
-            test: /\.css$/,
-            // include: [],
-            use: ExtractTextPlugin.extract({
-                use: 'css-loader',
-            }),
-        }],
+        rules: [
+            // {
+            //     test: /\.(css|scss)$/,
+            //     include: path.join(PATHS.src, 'assets/style'),
+            //     enforce: 'pre',
+            //     use: {
+            //         loader: 'postcss-loader',
+            //         options: {
+            //             plugins: () => ([
+            //                 stylelint(),
+            //             ]),
+            //         },
+            //     },
+            // },
+            {
+                test: /\.scss$/,
+                use: ExtractTextPlugin.extract({
+                    use: [
+                        'css-loader',
+                        {
+                            loader: 'postcss-loader',
+                            options: {
+                                plugins: () => ([
+                                    precss,
+                                    autoprefixer,
+                                ]),
+                            },
+                        },
+                        'sass-loader',
+                    ],
+                }),
+            }],
     },
     plugins: [
         new ExtractTextPlugin({
@@ -46,5 +75,11 @@ module.exports = {
             appMountId: 'app',
         }),
         new CleanWebpackPlugin([PATHS.dist]),
+        new webpack.ProvidePlugin({
+            $: 'jquery',
+            jQuery: 'jquery',
+            'window.jQuery': 'jquery',
+            Popper: ['popper.js', 'default'],
+        }),
     ],
 };
