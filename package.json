@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --env development",
-    "build": "webpack --env production",
+    "build": "webpack --env production --display-reasons --display-used-exports --display-provided-exports --display-chunks --display-max-modules 99999 --display-origins --display-entrypoints",
     "clean": "rimraf -rf ./dist",
     "lint:style": "stylelint src/assets/style/*.css src/assets/style/*.scss",
     "fix:style": "stylelint src/assets/style/*.css src/assets/style/*.scss --fix"
@@ -40,7 +40,7 @@
     "webpack-dev-server": "^2.8.2"
   },
   "dependencies": {
-    "bootstrap": "4.0.0-beta",
+    "bootstrap": "4.0.0-alpha.6",
     "jquery": "^3.2.1",
     "popper.js": "1.11.0"
   }
