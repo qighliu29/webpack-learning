@@ -1,0 +1,20 @@
+---
+# Output debugging info
+# loglevel: debug
+
+bootstrapVersion: 3
+
+useCustomIconFontPath: false
+
+styleLoaders:
+  - style-loader
+  - css-loader
+  - sass-loader
+
+preBootstrapCustomizations: ./src/third/bootswatch/flatly/_variables.scss
+
+appStyles: ./src/assets/style/app.scss
+
+styles: true
+
+scripts: true

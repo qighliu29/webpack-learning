@@ -1,52 +1,40 @@
 const path = require('path');
 const webpack = require('webpack');
+const merge = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const HtmlWebpackTemplatePug = require('html-webpack-template-pug');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
-const precss = require('precss');
-const autoprefixer = require('autoprefixer');
+const BabelWebpackPlugin = require('babel-minify-webpack-plugin');
 
 const PATHS = {
     src: path.join(__dirname, 'src'),
     dist: path.join(__dirname, 'dist'),
 };
 
-module.exports = {
-    entry: PATHS.src,
+const commonConfig = {
+    entry: {
+        main: ['bootstrap-loader/extractStyles', PATHS.src],
+        vendor: ['jquery', 'bootstrap-sass'],
+    },
     output: {
         filename: '[name].[chunkhash:8].js',
         path: PATHS.dist,
     },
-    devtool: 'source-map',
-    devServer: {
-        // Enable history API fallback so HTML5 History API based
-        // routing works. Good for complex setups.
-        historyApiFallback: true,
-
-        // Display only errors to reduce the amount of output.
-        stats: 'errors-only',
-    },
     module: {
         rules: [{
-            test: /\.scss$/,
-            use: ExtractTextPlugin.extract({
-                use: [
-                    'css-loader',
-                    {
-                        loader: 'postcss-loader',
-                        options: {
-                            plugins: () => ([
-                                precss,
-                                autoprefixer,
-                            ]),
-                        },
-                    },
-                    'sass-loader',
-                ],
-            }),
-        }],
+            test: /\.woff2?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+            use: 'url-loader?limit=10000',
+        },
+        {
+            test: /\.(ttf|eot|svg)(\?[\s\S]+)?$/,
+            use: 'file-loader',
+        },
+        {
+            test: /bootstrap-sass\/assets\/javascripts\//,
+            use: 'imports-loader?jQuery=jquery',
+        },
+        ],
     },
     plugins: [
         new ExtractTextPlugin({
@@ -55,22 +43,23 @@ module.exports = {
         new HtmlWebpackPlugin({
             // Required
             inject: false,
-            template: HtmlWebpackTemplatePug,
+            template: require('html-webpack-template-pug'), // eslint-disable-line global-require
 
             // Optional
             appMountId: 'app',
         }),
-        new CleanWebpackPlugin([PATHS.dist]),
         new webpack.ProvidePlugin({
             $: 'jquery',
             jQuery: 'jquery',
             'window.jQuery': 'jquery',
-            Popper: ['popper.js', 'default'],
         }),
         new StyleLintPlugin({
             context: path.join(PATHS.src, 'assets/style'),
             failOnError: true,
             quiet: false,
+        }),
+        new webpack.optimize.CommonsChunkPlugin({
+            name: 'vendor',
         }),
     ],
     resolve: {
@@ -80,3 +69,30 @@ module.exports = {
         },
     },
 };
+
+const developmentConfig = merge([
+    commonConfig,
+    {
+        devtool: 'source-map',
+        devServer: {
+            // Enable history API fallback so HTML5 History API based
+            // routing works. Good for complex setups.
+            historyApiFallback: true,
+
+            // Display only errors to reduce the amount of output.
+            stats: 'errors-only',
+        },
+    },
+]);
+
+const productionConfig = merge([
+    commonConfig,
+    {
+        plugins: [
+            new CleanWebpackPlugin([PATHS.dist]),
+            new BabelWebpackPlugin(),
+        ],
+    },
+]);
+
+module.exports = env => (env === 'production' ? productionConfig : developmentConfig);
