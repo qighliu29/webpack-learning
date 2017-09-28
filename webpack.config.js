@@ -14,7 +14,8 @@ const PATHS = {
 
 const commonConfig = {
     entry: {
-        main: ['bootstrap-loader/extractStyles', PATHS.src],
+        main: PATHS.src,
+        bootstrap: 'bootstrap-loader/extractStyles',
         vendor: ['jquery', 'bootstrap-sass'],
     },
     output: {

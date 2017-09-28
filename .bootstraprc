@@ -13,7 +13,7 @@ styleLoaders:
 
 preBootstrapCustomizations: ./src/third/bootswatch/flatly/_variables.scss
 
-appStyles: ./src/assets/style/app.scss
+appStyles: ./src/assets/style/bootstrap.scss
 
 styles: true
 
