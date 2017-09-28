@@ -10,6 +10,7 @@ const BabelWebpackPlugin = require('babel-minify-webpack-plugin');
 const PATHS = {
     src: path.join(__dirname, 'src'),
     dist: path.join(__dirname, 'dist'),
+    test: path.join(__dirname, 'test'),
 };
 
 const commonConfig = {
@@ -24,6 +25,26 @@ const commonConfig = {
     },
     module: {
         rules: [{
+            test: /\.(js|vue)$/,
+            enforce: 'pre',
+            include: [PATHS.src, PATHS.test],
+            use: {
+                loader: 'eslint-loader',
+                options: {
+                    formatter: require('eslint-friendly-formatter'), // eslint-disable-line global-require
+                },
+            },
+        },
+        {
+            test: /\.vue$/,
+            use: {
+                loader: 'vue-loader',
+                options: {
+
+                },
+            },
+        },
+        {
             test: /\.woff2?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
             use: 'url-loader?limit=10000',
         },
@@ -64,9 +85,10 @@ const commonConfig = {
         }),
     ],
     resolve: {
-        extensions: ['.js', '.json', '.jsx', '.css', '.scss'],
+        extensions: ['.js', '.json', '.jsx', '.vue', '.css', '.scss'],
         alias: {
             bootswatch: path.join(PATHS.src, 'third/bootswatch'),
+            vue$: 'vue/dist/vue.runtime.esm.js',
         },
     },
 };
@@ -96,4 +118,15 @@ const productionConfig = merge([
     },
 ]);
 
-module.exports = env => (env === 'production' ? productionConfig : developmentConfig);
+// this helps vue drop the development-only code
+const nodeEnvConfig = env => ({
+    plugins: [
+        new webpack.DefinePlugin({
+            'process.env': {
+                NODE_ENV: JSON.stringify(env),
+            },
+        }),
+    ],
+});
+
+module.exports = env => merge([(env === 'production' ? productionConfig : developmentConfig)].concat(nodeEnvConfig(env)));

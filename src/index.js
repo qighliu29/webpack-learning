@@ -1,5 +1,15 @@
-const app = document.querySelector('#app');
-const nav = document.createElement('nav');
-nav.classList.add('navbar');
-nav.classList.add('navbar-default');
-app.appendChild(nav);
+import Vue from 'vue';
+import App from './App.vue';
+
+Vue.config.productionTip = false;
+
+// eslint-disable-next-line no-new
+new Vue({
+    el: '#app',
+    render: h => h(App, {
+        props: {
+            top: false,
+        },
+    }),
+});
+
