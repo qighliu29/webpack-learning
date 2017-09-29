@@ -40,7 +40,20 @@ const commonConfig = {
             use: {
                 loader: 'vue-loader',
                 options: {
-
+                    loaders: {
+                        scss: [
+                            'vue-style-loader',
+                            'css-loader',
+                            'sass-loader',
+                            {
+                                loader: 'sass-resources-loader',
+                                options: {
+                                    resources: path.join(PATHS.src, 'assets/style/resources.scss'),
+                                    // resources: ['./path/to/vars.scss', './path/to/mixins.scss'],
+                                },
+                            },
+                        ],
+                    },
                 },
             },
         },
