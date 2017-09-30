@@ -1,13 +1,1 @@
-@mixin padding($top, $right, $bottom, $left) {
-    padding-bottom: $bottom;
-    padding-left: $left;
-    padding-right: $right;
-    padding-top: $top;
-}
-
-@mixin margin($top, $right, $bottom, $left) {
-    margin-bottom: $bottom;
-    margin-left: $left;
-    margin-right: $right;
-    margin-top: $top;
-}
+@import '~bourbon/app/assets/stylesheets/bourbon';

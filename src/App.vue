@@ -1,11 +1,18 @@
 <template>
     <!-- <nav class="navbar navbar-default" :class="{'navbar-fixed-top': top}">
     </nav> -->
-    <wl-slide-out-menu v-bind="menu" :loc="'left'"></wl-slide-out-menu>
+    <div>
+        <wl-nav-menu v-bind="menu" :loc="'left'"></wl-nav-menu>
+        <wl-main-panel>
+            <wl-top-nav-bar slot="header"></wl-top-nav-bar>
+        </wl-main-panel>
+    </div>
 </template>
 
 <script>
-import WlSlideOutMenu from './components/SlideOutMenu.vue';
+import WlNavMenu from './components/NavMenu.vue';
+import WlMainPanel from './components/MainPanel.vue';
+import WlTopNavBar from './components/TopNavBar.vue';
 
 export default {
     props: ['top'],
@@ -30,7 +37,9 @@ export default {
         }
     }),
     components: {
-        WlSlideOutMenu
+        WlNavMenu,
+        WlMainPanel,
+        WlTopNavBar
     }
 }
 </script>

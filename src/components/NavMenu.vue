@@ -26,10 +26,10 @@ export default {
 <style lang="scss" scoped>
 nav {
     position: fixed;
+    z-index: 0;
 
     ul {
         list-style: none;
-        @include margin(1em, 0, 0, 0);
     }
 
     &.left {
