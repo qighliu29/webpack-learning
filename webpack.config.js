@@ -83,6 +83,12 @@ const commonConfig = {
 
             // Optional
             appMountId: 'app',
+
+            injectExtras: {
+                head: [
+                    'https://use.fontawesome.com/39cc1dc769.js',
+                ],
+            },
         }),
         new webpack.ProvidePlugin({
             $: 'jquery',

@@ -1,12 +1,12 @@
 <template>
     <main :class="{ 'shrink': shrink }">
-        <slot name="header" v-on:toggleShrink="slide()"></slot>
-        <slot name="content" @toggleShrink="slide()"></slot>
-        <slot name="footer" @toggleShrink="slide()"></slot>
+        <wl-top-nav-bar @toggleShrink="slide()"></wl-top-nav-bar>
     </main>
 </template>
 
 <script>
+import WlTopNavBar from './TopNavBar.vue';
+
 export default {
     data: () => ({
         shrink: false
@@ -15,6 +15,9 @@ export default {
         slide() {
             this.shrink = !this.shrink;
         }
+    },
+    components: {
+        WlTopNavBar
     }
 }
 </script>
@@ -25,9 +28,9 @@ main {
     z-index: 1;
     transition: transform 300ms;
 
-    width: 500px;
-    height: 500px;
-    background-color:cyan;
+    // width: 500px;
+    // height: 500px;
+    // background-color: cyan;
 
     input {
         position: absolute;

@@ -2,9 +2,8 @@
     <!-- <nav class="navbar navbar-default" :class="{'navbar-fixed-top': top}">
     </nav> -->
     <div>
-        <wl-nav-menu v-bind="menu" :loc="'left'"></wl-nav-menu>
+        <!-- <wl-nav-menu v-bind="menu" :loc="'left'"></wl-nav-menu> -->
         <wl-main-panel>
-            <wl-top-nav-bar slot="header"></wl-top-nav-bar>
         </wl-main-panel>
     </div>
 </template>
