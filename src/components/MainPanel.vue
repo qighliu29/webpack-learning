@@ -1,11 +1,13 @@
 <template>
     <main :class="{ 'shrink': shrink }">
         <wl-top-nav-bar @toggleShrink="slide()"></wl-top-nav-bar>
+        <wl-main-content></wl-main-content>
     </main>
 </template>
 
 <script>
 import WlTopNavBar from './TopNavBar.vue';
+import WlMainContent from './MainContent.vue';
 
 export default {
     data: () => ({
@@ -17,7 +19,8 @@ export default {
         }
     },
     components: {
-        WlTopNavBar
+        WlTopNavBar,
+        WlMainContent
     }
 }
 </script>

@@ -36,6 +36,18 @@ const commonConfig = {
             },
         },
         {
+            test: /stylesheet.scss$/,
+            include: path.join(PATHS.src, 'assets/style'),
+            use: ExtractTextPlugin.extract({
+                use: [{
+                    loader: 'css-loader',
+                }, {
+                    loader: 'sass-loader',
+                }],
+                fallback: 'style-loader',
+            }),
+        },
+        {
             test: /\.vue$/,
             use: {
                 loader: 'vue-loader',
@@ -74,7 +86,7 @@ const commonConfig = {
     },
     plugins: [
         new ExtractTextPlugin({
-            filename: '[name].css',
+            filename: '[name].[contenthash].css',
         }),
         new HtmlWebpackPlugin({
             // Required

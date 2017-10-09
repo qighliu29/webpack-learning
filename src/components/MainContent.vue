@@ -105,7 +105,7 @@
                 </div>
                 <div class="row forum-stats">
                     <div class="col-xs-6 col-md-3">
-                        <div class="stats-vard">
+                        <div class="stats-card">
                             <h2>
                                 <span class="stats">54</span>
                                 <br>
@@ -140,6 +140,7 @@ export default {
 
 .categories {
     list-style-type: none;
+    padding: 0;
 
     &>li {
         .content {
