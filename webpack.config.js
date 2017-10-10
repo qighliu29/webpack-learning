@@ -98,6 +98,11 @@ const commonConfig = {
 
             injectExtras: {
                 head: [
+                    {
+                        tag: 'meta',
+                        name: 'viewport',
+                        content: 'width=device-width, initial-scale=1.0',
+                    },
                     'https://use.fontawesome.com/39cc1dc769.js',
                 ],
             },
